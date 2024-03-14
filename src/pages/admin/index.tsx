@@ -10,7 +10,9 @@ import useMemoKeepAliveScroll from "@/hooks/useMemoKeepAliveScroll"
 
 function Home() {
     const [active, setActive] = useState(false)
-    const count = useAppSelector(state => state.counter.value)
+    // const count = useAppSelector(state => state.counter.value)
+    const [count, setCount] = useState(0)
+
     const dispatch = useAppDispatch()
     const { toggleTheme } = useThemeContext()
     const homeKey = useKeepAliveKey()
@@ -39,7 +41,8 @@ function Home() {
                     <Button type={"link"}>Redux Example</Button>
                     <Button
                         onClick={() => {
-                            dispatch(decrement())
+                            // dispatch(decrement())
+                            setCount(prevCount => prevCount - 1) // 更新本地计数器状态
                         }}
                     >
                         minus -
@@ -47,7 +50,8 @@ function Home() {
                     <Input value={count}></Input>
                     <Button
                         onClick={() => {
-                            dispatch(increment())
+                            // dispatch(increment())
+                            setCount(prevCount => prevCount - 1) // 更新本地计数器状态
                         }}
                     >
                         plus +
