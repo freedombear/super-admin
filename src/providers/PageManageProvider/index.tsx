@@ -123,8 +123,10 @@ export function PageManageProvider(props: { children: ReactNode }) {
             setActive(nextActiveKey)
         }
         // if nextActiveKey is existed, navigate to nextActiveKey
+        console.log('close', nextActiveKey, active, key, pages, lastOpenKey.current)
+        const nextActiveRouteKey = nextActiveKey?.split("_")[0] || '/';
         if (nextActiveKey) {
-            navigateTo(nextActiveKey, {
+            navigateTo(nextActiveRouteKey.split("_")[0], {
                 replace: true,
             })
         }
@@ -140,13 +142,16 @@ export function PageManageProvider(props: { children: ReactNode }) {
         const newPages = [...pages]
         // 如果已经存在，就不再添加
         const existed = newPages.some(item => item.key === page.key)
+        // home_xxxx => home
+        const routeKey = page.key.split("_")[0];
+        console.log('open', page.key, routeKey, page, newPages)
         if (!existed) {
             newPages.push(page)
             setPages(newPages)
         }
         // prevent navigate to same page
         if (page.key === active) return
-        navigateTo(page.key, {
+        navigateTo(routeKey, {
             state: page.state,
         })
         setActive(page.key)
