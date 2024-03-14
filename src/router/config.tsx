@@ -39,7 +39,7 @@ import Home from "@/pages/admin"
 
 const adminRoutes: Array<RouteConfig> = [
     {
-        path: "",
+        path: "home",
         name: "home",
         meta: { title: "首页(带缓存)" },
         search: true,
