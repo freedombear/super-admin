@@ -99,6 +99,7 @@ function renderMenuItems(data: Array<RouteConfig>, open: (info: PageConfig) => v
                 const thisPath = mergePath(route.path, path)
                 const children = filter(route => not(route.notMenu), route.children ?? [])
                 const hasChildren = isNil(children) || isEmpty(children)
+                const pageKey = `${thisPath}_${Date.now()}`;
                 items.push({
                     key: route.name,
                     title: route.meta?.title,
@@ -109,7 +110,7 @@ function renderMenuItems(data: Array<RouteConfig>, open: (info: PageConfig) => v
                         <a
                             onClick={() => {
                                 open({
-                                    key: thisPath,
+                                    key: pageKey,
                                     label: route.meta?.title as string,
                                 })
                             }}
@@ -314,11 +315,13 @@ function Layout({ route }: Props) {
 
     // listen url change to open page
     useEffect(() => {
-        if (matchRouteObj) {
+        const realPathKey = active.split("_")[0]
+        if (realPathKey !== routerPathKey && matchRouteObj) {
             open({
                 key: routerPathKey,
                 label: matchRouteObj.title,
             } as PageConfig)
+      console.log('url change effect', matchRouteObj, routerPathKey, active)
         }
     }, [routerPathKey])
 
